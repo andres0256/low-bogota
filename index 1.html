@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Configuración para App Móvil (PWA) -->
+  <meta name="theme-color" content="#050505">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="low.jpg">
+  <link rel="manifest" href="manifest.json">
+
+  <link rel="icon" type="image/png" href="low.jpg">
+  <title>Low Bogotá</title>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #050505;
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-x: hidden;
+    }
+
+    /* BARRA DE MENÚ SUPERIOR ADAPTABLE */
+    header-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+    }
+
+    .nav-logo {
+      font-weight: 800;
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav-brand-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      background: #141414;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #ccc;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .nav-btn:hover, .nav-btn:active {
+      background: #d4af37;
+      color: #000;
+      border-color: #d4af37;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    .main-content {
+      max-width: 1300px;
+      margin: 30px auto;
+      width: calc(100% - 40px);
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      flex-grow: 1;
+    }
+
+    .hero-intro {
+      text-align: center;
+    }
+
+    .hero-intro h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #ffffff 40%, #777777 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-intro p {
+      color: #777;
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    /* CARRUSEL DE IMÁGENES ADAPTABLE */
+    .carousel-container {
+      width: 100%;
+      height: 45vh;
+      min-height: 280px;
+      max-height: 500px;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+    }
+
+    .carousel-slide {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .carousel-item {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(80%) contrast(105%);
+    }
+
+    .carousel-caption {
+      position: absolute;
+      bottom: 25px;
+      left: 25px;
+      right: 25px;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 15px 20px;
+      border-radius: 10px;
+      border-left: 3px solid #d4af37;
+    }
+
+    .carousel-caption h3 {
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .carousel-caption p {
+      font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+      color: #aaa;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #444;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    /* DISEÑO RESPONSIVE PARA CELULARES Y TABLETS */
+    @media (max-width: 768px) {
+      header-nav {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 15px;
+      }
+      .nav-brand-buttons {
+        justify-content: center;
+        width: 100%;
+        gap: 6px;
+      }
+      .nav-btn {
+        padding: 6px 10px;
+        font-size: 0.7rem;
+        flex: 1;
+        text-align: center;
+      }
+      .main-content {
+        width: calc(100% - 20px);
+        margin: 15px auto;
+        gap: 20px;
+      }
+      .carousel-container {
+        height: 320px;
+      }
+      .carousel-caption {
+        bottom: 15px;
+        left: 15px;
+        right: 15px;
+        padding: 12px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRA DE MENÚ SUPERIOR -->
+  <header-nav>
+    <a href="index.html" class="nav-logo">Low</a>
+    <div class="nav-brand-buttons">
+      <a href="urban-icee.html" class="nav-btn">Urban Icee</a>
+      <a href="low-bogota.html" class="nav-btn">Low Bogotá</a>
+      <a href="callejeros.html" class="nav-btn">Callejeros</a>
+    </div>
+  </header-nav>
+
+  <!-- CONTENIDO CENTRAL -->
+  <div class="main-content">
+    
+    <div class="hero-intro">
+      <h1>Ecosistema Digital</h1>
+      <p>Selecciona una marca en el menú superior para ingresar</p>
+    </div>
+
+    <!-- CARRUSEL DE IMÁGENES AUTOMÁTICO -->
+    <div class="carousel-container">
+      <div class="carousel-slide" id="carouselSlide">
+        
+        <!-- Slide 1 -->
+        <div class="carousel-item">
+          <img src="urban ice.jpg" alt="Urban Icee 23">
+          <div class="carousel-caption">
+            <h3>Urban Icee 23</h3>
+            <p>Granizados y granilatas artesanales de máxima frescura.</p>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-item">
+          <img src="low.jpg" alt="Low Bogotá">
+          <div class="carousel-caption">
+            <h3>Low Bogotá</h3>
+            <p>Repuestos exclusivos y remodelación profesional de alto rendimiento.</p>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-item">
+          <img src="callejeros.jpg" alt="Callejeros">
+          <div class="carousel-caption">
+            <h3>Callejeros</h3>
+            <p>Cultura tuerca, eventos de exhibición y pasión sobre ruedas.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 GRUPO MULTIMARCA EXCLUSIVO. TODOS LOS DERECHOS RESERVADOS.</p>
+  </footer>
+
+  <!-- SCRIPT PARA EL CARRUSEL -->
+  <script>
+    const slide = document.getElementById('carouselSlide');
+    const items = document.querySelectorAll('.carousel-item');
+    let currentIndex = 0;
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % items.length;
+      slide.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    let slideInterval = setInterval(nextSlide, 4500);
+
+    // Pausar o reanudar al tocar en dispositivos táctiles
+    slide.addEventListener('touchstart', () => clearInterval(slideInterval));
+  </script>
+
+</body>
+</html>
